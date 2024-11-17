@@ -36,7 +36,7 @@ const productSchema = new mongoose.Schema({
 }, { versionKey: false });
 
 
-// Main model for the 'products' collection
+// Main model for the 'products' collection.
 const MainProductModel = mongoose.model('MainProduct', productSchema, 'products');
 
 // Endpoint 1: Add a new product to the 'products' collection
