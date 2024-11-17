@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
 const MainProductModel = mongoose.model('MainProduct', productSchema, 'products');
 
 // Endpoint 1: Add a new product to the 'products' collection
-app.post('/create-product', async (req, res) => {
+app.post('/api/create-product', async (req, res) => {
     const productData = {
         productname: req.body.productname,
         price: req.body.price,
@@ -67,7 +67,7 @@ app.post('/create-product', async (req, res) => {
 });
 
 // Endpoint 2: Add a new product to a specific collection based on the category provided
-app.post('/create-product-in/:collectionName', async (req, res) => {
+app.post('/api/create-product-in/:collectionName', async (req, res) => {
     const { collectionName } = req.params; // Get collection name from URL parameter
 
     // Dynamic model for the specified collection name
@@ -100,7 +100,7 @@ app.post('/create-product-in/:collectionName', async (req, res) => {
 
 
 // Create a GET route to fetch products from the main 'products' collection
-app.get('/get-products', async (req, res) => {
+app.get('/api/get-products', async (req, res) => {
     try {
         const products = await MainProductModel.find();
         res.json(products);
@@ -110,7 +110,7 @@ app.get('/get-products', async (req, res) => {
 });
 
 // Optional: Create a GET route to fetch products from a specified collection
-app.get('/get-products/:collectionName', async (req, res) => {
+app.get('/api/get-products/:collectionName', async (req, res) => {
     const { collectionName } = req.params;
 
     try {
@@ -122,7 +122,7 @@ app.get('/get-products/:collectionName', async (req, res) => {
     }
 });
 
-app.get('/get-product-details/:id', async (req, res) => {
+app.get('/api/get-product-details/:id', async (req, res) => {
     try {
         const productId = req.params.id;
         const product = await MainProductModel.findById(productId); // Use MainProductModel here
@@ -142,14 +142,12 @@ const instance = new Razorpay({
   key_secret: 'YOUR_KEY_SECRET',
 });
 
-app.post('/create-order', async (req, res) => {
+app.post('/api/create-order', async (req, res) => {
   const options = {
     amount: req.body.amount, // amount in paise
     currency: 'INR',
     receipt: `receipt_order_${Date.now()}`,
   };
-
-  console.log(options, 152)
   try {
     const order = await instance.orders.create(options);
     res.json(order);
@@ -164,5 +162,5 @@ app.listen(port || 3000, () => {
 })
 
 app.use(cors({
-    origin: 'http://localhost:4200'
+    origin: ['http://localhost:4200', 'http://52.66.53.37']
 }));
