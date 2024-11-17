@@ -162,5 +162,5 @@ app.listen(port || 3000, () => {
 })
 
 app.use(cors({
-    origin: ['http://localhost:4200', "http://amrielle.in", "https://amrielle.in"]
+    origin: ['http://localhost:4200', "http://amrielle.in"]
 }));
